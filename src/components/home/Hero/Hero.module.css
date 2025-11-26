@@ -1,0 +1,76 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 720px; /* как в макете для desktop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("/Hero.jpg"); /* поставь свою картинку */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45); /* тёмный оверлей как на макете */
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+
+  text-align: center;
+  max-width: 800px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+/* Заголовок */
+
+.title {
+  font-size: 64px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+/* Подзаголовок */
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 400;
+  color: #e0e0e0;
+  line-height: 1.4;
+}
+
+/* Кнопка */
+
+.button {
+  margin-top: 16px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 200px;
+  height: 56px;
+
+  background-color: #3470ff;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 12px;
+
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: #2554cc;
+}
