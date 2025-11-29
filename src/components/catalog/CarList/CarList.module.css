@@ -1,0 +1,43 @@
+.list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+
+.item {
+  list-style: none;
+}
+
+.status {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.error {
+  color: red;
+  margin-top: 40px;
+  text-align: center;
+}
+
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  margin: 60px 0 100px;
+}
+
+.loadMoreButton {
+  padding: 12px 32px;
+  border-radius: 12px;
+  border: 1px solid #3470ff;
+  background: transparent;
+  color: #3470ff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.loadMoreButton:hover {
+  background: #3470ff;
+  color: #ffffff;
+}

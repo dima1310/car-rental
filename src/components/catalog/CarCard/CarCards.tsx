@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { Car } from "@/src/components/types/car";
 import { useCarsStore } from "@/src/components/store/useCarStore";
 import { formatMileage } from "@/src/components/utils/formatMileage";
+import styles from "./CarCard.module.css";
 
 interface Props {
   car: Car;
@@ -13,33 +14,43 @@ export const CarCard: React.FC<Props> = ({ car }) => {
   const { favorites, toggleFavorite } = useCarsStore();
   const isFavorite = favorites.includes(car.id);
 
-  // Лог ID (нужен для проверки)
-  console.log("ID IN CARD:", car.id);
-
   return (
-    <article>
-      <img
-        src={car.img}
-        alt={`${car.make} ${car.model}`}
-        width={300}
-        height={200}
-        style={{ objectFit: "cover" }}
-      />
+    <article className={styles.card}>
+      {/* IMAGE */}
+      <div className={styles.imageWrapper}>
+        <img
+          src={car.img}
+          alt={`${car.make} ${car.model}`}
+          className={styles.image}
+        />
 
-      <h2>
-        {car.make} {car.model}, {car.year}
-      </h2>
+        <button
+          type="button"
+          className={`${styles.favorite} ${
+            isFavorite ? styles.favoriteActive : ""
+          }`}
+          onClick={() => toggleFavorite(car.id)}
+          aria-label="Add to favorites"
+        />
+      </div>
 
-      <p>Price: {car.rentalPrice}</p>
-      <p>Mileage: {formatMileage(car.mileage)}</p>
+      {/* CONTENT */}
+      <div className={styles.content}>
+        <div className={styles.titleRow}>
+          <h3 className={styles.title}>
+            {car.make} <span>{car.model}</span>, {car.year}
+          </h3>
+          <span className={styles.price}>{car.rentalPrice}</span>
+        </div>
 
-      <button type="button" onClick={() => toggleFavorite(car.id)}>
-        {isFavorite ? "Remove from favorites" : "Add to favorites"}
-      </button>
+        <p className={styles.meta}>
+          {car.city} | {car.country} | {car.type} | {formatMileage(car.mileage)}
+        </p>
 
-      <Link href={`/catalog/${car.id}`}>
-        <button type="button">Read more</button>
-      </Link>
+        <Link href={`/catalog/${car.id}`} className={styles.button}>
+          Read more
+        </Link>
+      </div>
     </article>
   );
 };

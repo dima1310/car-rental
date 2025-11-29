@@ -28,44 +28,50 @@ export const useCarsStore = create<CarsState>()(
       favorites: [],
       page: 1,
       limit: 12,
-      hasMore: true,
+      hasMore: false,
       isLoading: false,
       error: null,
 
       // ===== ACTIONS =====
 
+      // ✅ Установка фильтров (сброс каталога)
       setFilters: async (filters) => {
         set({
           filters,
           cars: [],
           page: 1,
-          hasMore: true,
+          hasMore: false,
         });
 
         await get().loadInitialCars();
       },
 
+      // ✅ Первая загрузка
       loadInitialCars: async () => {
         try {
           set({ isLoading: true, error: null });
 
           const { filters, limit } = get();
-          const data = await carsApi.getCars(filters); // ✅ всегда массив
+          const data = await carsApi.getCars(filters);
 
           set({
-            cars: data.slice(0, limit),
+            cars: data,
             page: 1,
-            hasMore: data.length > limit,
+            // ✅ если сервер дал limit элементов — показываем кнопку
+            hasMore: data.length === limit,
           });
         } catch (error: any) {
-          set({ error: error.message ?? "Failed to load cars" });
+          set({
+            error: error?.message ?? "Failed to load cars",
+          });
         } finally {
           set({ isLoading: false });
         }
       },
 
+      // ✅ Load more
       loadMoreCars: async () => {
-        const { page, limit, filters, cars, hasMore, isLoading } = get();
+        const { filters, limit, cars, hasMore, isLoading } = get();
         if (!hasMore || isLoading) return;
 
         try {
@@ -73,27 +79,26 @@ export const useCarsStore = create<CarsState>()(
 
           const data = await carsApi.getCars(filters);
 
-          const start = page * limit;
-          const nextCars = data.slice(start, start + limit);
-
           set({
-            cars: [...cars, ...nextCars],
-            page: page + 1,
-            hasMore: data.length > start + limit,
+            cars: [...cars, ...data],
+            hasMore: data.length === limit,
           });
         } catch (error: any) {
-          set({ error: error.message ?? "Failed to load more cars" });
+          set({
+            error: error?.message ?? "Failed to load more cars",
+          });
         } finally {
           set({ isLoading: false });
         }
       },
 
+      // ✅ Избранное
       toggleFavorite: (id) => {
         const { favorites } = get();
 
         set({
           favorites: favorites.includes(id)
-            ? favorites.filter((fid) => fid !== id)
+            ? favorites.filter((favId) => favId !== id)
             : [...favorites, id],
         });
       },
@@ -101,7 +106,7 @@ export const useCarsStore = create<CarsState>()(
     {
       name: "car-rental-store",
       partialize: (state) => ({
-        favorites: state.favorites,
+        favorites: state.favorites, // ✅ сохраняем только избранное
       }),
     }
   )

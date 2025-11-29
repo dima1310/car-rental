@@ -1,90 +1,54 @@
 "use client";
 
-import { useState } from "react";
-import { carsApi } from "@/src/components/services/carsApi";
+import styles from "./BookingForm.module.css";
 
-interface BookingFormProps {
+interface Props {
   carId: string;
 }
 
-export const BookingForm: React.FC<BookingFormProps> = ({ carId }) => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    try {
-      setIsSubmitting(true);
-      await carsApi.createBooking({
-        carId,
-        name,
-        phone,
-        startDate,
-        endDate,
-      });
-
-      alert("Car successfully booked!"); // можеш замінити на toast
-      setName("");
-      setPhone("");
-      setStartDate("");
-      setEndDate("");
-    } catch {
-      alert("Booking failed, please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+export const BookingForm = ({ carId }: Props) => {
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Book this car</h2>
+    <section className={styles.card}>
+      <h2 className={styles.title}>Book your car now</h2>
+      <p className={styles.subtitle}>
+        Stay connected! We are always ready to help you.
+      </p>
 
-      <label>
-        Name
+      <form className={styles.form}>
         <input
           type="text"
-          value={name}
+          name="name"
+          placeholder="Name*"
+          className={styles.input}
           required
-          onChange={(e) => setName(e.target.value)}
         />
-      </label>
 
-      <label>
-        Phone
         <input
-          type="tel"
-          value={phone}
+          type="email"
+          name="email"
+          placeholder="Email*"
+          className={styles.input}
           required
-          onChange={(e) => setPhone(e.target.value)}
         />
-      </label>
 
-      <label>
-        From
         <input
-          type="date"
-          value={startDate}
-          required
-          onChange={(e) => setStartDate(e.target.value)}
+          type="Booking date*"
+          name="date"
+          placeholder="Booking date*"
+          className={styles.input}
         />
-      </label>
 
-      <label>
-        To
-        <input
-          type="date"
-          value={endDate}
-          required
-          onChange={(e) => setEndDate(e.target.value)}
+        <textarea
+          name="comment"
+          placeholder="Comment"
+          className={styles.textarea}
+          rows={4}
         />
-      </label>
 
-      <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Booking..." : "Book now"}
-      </button>
-    </form>
+        <button type="submit" className={styles.button}>
+          Send
+        </button>
+      </form>
+    </section>
   );
 };

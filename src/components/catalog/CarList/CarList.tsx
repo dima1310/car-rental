@@ -1,55 +1,48 @@
 "use client";
 
-import { useEffect } from "react";
 import { useCarsStore } from "@/src/components/store/useCarStore";
 import { CarCard } from "@/src/components/catalog/CarCard/CarCards";
+import styles from "./CarList.module.css";
+import { useEffect } from "react";
 
 export default function CarList() {
   const { cars, isLoading, error, hasMore, loadInitialCars, loadMoreCars } =
     useCarsStore();
 
-  // 🔥 загрузка при первом рендере
+  useEffect(() => {
+    loadInitialCars();
+  }, [loadInitialCars]);
 
   if (error) {
-    return <p style={{ color: "red" }}>{error}</p>;
+    return <p className={styles.error}>{error}</p>;
   }
 
   if (isLoading && cars.length === 0) {
-    return <p>Loading cars...</p>;
+    return <p className={styles.status}>Loading cars...</p>;
   }
 
   if (!isLoading && cars.length === 0) {
-    return <p>No cars found</p>;
+    return <p className={styles.status}>No cars found</p>;
   }
 
   return (
     <>
-      <ul
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-          gap: "24px",
-        }}
-      >
+      <ul className={styles.list}>
         {cars.map((car) => (
-          <li key={car.id}>
+          <li key={car.id} className={styles.item}>
             <CarCard car={car} />
           </li>
         ))}
       </ul>
 
       {hasMore && (
-        <div style={{ marginTop: "32px", textAlign: "center" }}>
+        <div className={styles.loadMoreWrapper}>
           <button
             onClick={loadMoreCars}
             disabled={isLoading}
-            style={{
-              padding: "12px 24px",
-              fontSize: "16px",
-              cursor: "pointer",
-            }}
+            className={styles.loadMoreButton}
           >
-            {isLoading ? "Loading..." : "Load More"}
+            {isLoading ? "Loading..." : "Load more"}
           </button>
         </div>
       )}

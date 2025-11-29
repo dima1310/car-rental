@@ -7,7 +7,6 @@ import styles from "./Filter.module.css";
 export const Filters = () => {
   const { setFilters } = useCarsStore();
 
-  // локальные значения инпутов
   const [brand, setBrand] = useState("");
   const [price, setPrice] = useState("");
   const [mileageFrom, setMileageFrom] = useState("");
@@ -31,70 +30,83 @@ export const Filters = () => {
   };
 
   return (
-    <div className={styles.wrapper}>
-      {/* Brand */}
-      <div className={styles.field}>
-        <label>Brand</label>
-        <select
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-          className={styles.select}
-        >
-          <option value="">All</option>
-          <option value="Audi">Audi</option>
-          <option value="BMW">BMW</option>
-          <option value="Mercedes">Mercedes</option>
-          <option value="Porsche">Porsche</option>
-          <option value="Toyota">Toyota</option>
-        </select>
-      </div>
+    <section className={styles.section}>
+      <div className={styles.fields}>
+        {/* Brand */}
+        <div className={styles.field}>
+          <span className={styles.label}>Car brand</span>
+          <div className={styles.controlWrapper}>
+            <select
+              value={brand}
+              onChange={(e) => setBrand(e.target.value)}
+              className={styles.select}
+            >
+              <option value="">Choose a brand</option>
+              <option value="Buick">Buick</option>
+              <option value="Volvo">Volvo</option>
+              <option value="Subaru">Subaru</option>
+              <option value="Hyundai">Hyundai</option>
+              <option value="BMW">BMW</option>
+              <option value="Mini">Mini</option>
+            </select>
+          </div>
+        </div>
 
-      {/* Price */}
-      <div className={styles.field}>
-        <label>Price up to</label>
-        <select
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          className={styles.select}
-        >
-          <option value="">Any</option>
-          <option value="40">40$</option>
-          <option value="50">50$</option>
-          <option value="60">60$</option>
-          <option value="70">70$</option>
-          <option value="80">80$</option>
-        </select>
-      </div>
+        {/* Price */}
+        <div className={styles.field}>
+          <span className={styles.label}>Price / 1 hour</span>
+          <div className={styles.controlWrapper}>
+            <select
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              className={styles.select}
+            >
+              <option value="">Choose a price</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+              <option value="60">60</option>
+              <option value="70">70</option>
+              <option value="80">80</option>
+            </select>
+          </div>
+        </div>
 
-      {/* Mileage */}
-      <div className={styles.field}>
-        <label>Mileage</label>
-        <div className={styles.mileageRow}>
-          <input
-            type="number"
-            placeholder="From"
-            value={mileageFrom}
-            onChange={(e) => setMileageFrom(e.target.value)}
-            className={styles.input}
-          />
-          <input
-            type="number"
-            placeholder="To"
-            value={mileageTo}
-            onChange={(e) => setMileageTo(e.target.value)}
-            className={styles.input}
-          />
+        {/* Mileage */}
+        <div className={styles.field}>
+          <span className={styles.label}>Car mileage / km</span>
+          <div className={styles.mileageGroup}>
+            <input
+              type="number"
+              placeholder="From"
+              value={mileageFrom}
+              onChange={(e) => setMileageFrom(e.target.value)}
+              className={styles.input}
+            />
+            <input
+              type="number"
+              placeholder="To"
+              value={mileageTo}
+              onChange={(e) => setMileageTo(e.target.value)}
+              className={styles.input}
+            />
+          </div>
         </div>
       </div>
 
-      <div className={styles.buttons}>
-        <button className={styles.apply} onClick={handleApplyFilters}>
-          Apply
+      <div className={styles.actions}>
+        <button
+          type="button"
+          className={styles.search}
+          onClick={handleApplyFilters}
+        >
+          Search
         </button>
-        <button className={styles.reset} onClick={handleReset}>
+
+        {/* <button type="button" className={styles.reset} onClick={handleReset}>
           Reset
-        </button>
+        </button> */}
       </div>
-    </div>
+    </section>
   );
 };

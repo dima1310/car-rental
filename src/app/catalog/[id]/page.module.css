@@ -1,0 +1,99 @@
+.page {
+  padding: 40px 0 80px;
+}
+
+.container {
+  max-width: 1184px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 640px 1fr;
+  gap: 72px;
+}
+
+/* LEFT */
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.booking {
+  background: #f7f7fb;
+  border-radius: 10px;
+  padding: 32px;
+}
+
+.bookingTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.bookingText {
+  font-size: 14px;
+  color: #8a8a89;
+  margin-bottom: 24px;
+}
+
+/* RIGHT */
+
+.right {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.meta {
+  display: flex;
+  gap: 16px;
+  font-size: 14px;
+  color: #8a8a89;
+  margin-bottom: 16px;
+}
+
+.price {
+  font-size: 24px;
+  font-weight: 600;
+  color: #3470ff;
+  margin-bottom: 16px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.section {
+  margin-bottom: 24px;
+}
+
+.section h3 {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.section li {
+  font-size: 14px;
+  margin-bottom: 6px;
+}

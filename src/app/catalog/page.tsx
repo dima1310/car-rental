@@ -4,35 +4,41 @@ import { useEffect } from "react";
 import { useCarsStore } from "@/src/components/store/useCarStore";
 import { CarCard } from "@/src/components/catalog/CarCard/CarCards";
 import { Filters } from "@/src/components/catalog/Filters/Filters";
+import styles from "./CatalogPage.module.css";
 
 export default function CatalogPage() {
   const { cars, loadInitialCars, loadMoreCars, hasMore, isLoading, error } =
     useCarsStore();
 
   useEffect(() => {
-    // початкове завантаження
     loadInitialCars();
   }, [loadInitialCars]);
 
   return (
-    <main>
-      <h1>Catalog</h1>
-
+    <main className={styles.page}>
       <Filters />
 
       {isLoading && cars.length === 0 && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
-      <div>
+      <ul className={styles.grid}>
         {cars.map((car) => (
-          <CarCard key={car.id} car={car} />
+          <li key={car.id} className={styles.gridItem}>
+            <CarCard car={car} />
+          </li>
         ))}
-      </div>
+      </ul>
 
       {hasMore && (
-        <button type="button" onClick={loadMoreCars} disabled={isLoading}>
-          {isLoading ? "Loading..." : "Load More"}
-        </button>
+        <div className={styles.loadMoreWrapper}>
+          <button
+            className={styles.loadMore}
+            onClick={loadMoreCars}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Load more"}
+          </button>
+        </div>
       )}
     </main>
   );
