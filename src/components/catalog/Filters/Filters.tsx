@@ -2,111 +2,145 @@
 
 import { useState } from "react";
 import { useCarsStore } from "@/src/components/store/useCarStore";
-import styles from "./Filter.module.css";
+import css from "./Filter.module.css";
 
-export const Filters = () => {
+const Filters = () => {
   const { setFilters } = useCarsStore();
 
-  const [brand, setBrand] = useState("");
-  const [price, setPrice] = useState("");
-  const [mileageFrom, setMileageFrom] = useState("");
-  const [mileageTo, setMileageTo] = useState("");
+  const [brandValue, setBrandValue] = useState<string | null>(null);
+  const [priceValue, setPriceValue] = useState<string | null>(null);
+  const [fromVal, setFromVal] = useState<string | null>(null);
+  const [toVal, setToVal] = useState<string | null>(null);
 
-  const handleApplyFilters = () => {
+  const [brandOpen, setBrandOpen] = useState(false);
+  const [priceOpen, setPriceOpen] = useState(false);
+
+  const BRANDS = ["BMW", "Audi", "Volvo", "Subaru", "Hyundai", "Mini", "Buick"];
+  const PRICES = ["30", "40", "50", "60", "70", "80"];
+
+  const applyFilters = () => {
     setFilters({
-      brand: brand || null,
-      price: price ? Number(price) : null,
-      mileageFrom: mileageFrom ? Number(mileageFrom) : null,
-      mileageTo: mileageTo ? Number(mileageTo) : null,
+      brand: brandValue,
+      price: priceValue ? Number(priceValue) : null,
+      mileageFrom: fromVal ? Number(fromVal) : null,
+      mileageTo: toVal ? Number(toVal) : null,
     });
   };
 
-  const handleReset = () => {
-    setBrand("");
-    setPrice("");
-    setMileageFrom("");
-    setMileageTo("");
-    setFilters({});
-  };
-
   return (
-    <section className={styles.section}>
-      <div className={styles.fields}>
-        {/* Brand */}
-        <div className={styles.field}>
-          <span className={styles.label}>Car brand</span>
-          <div className={styles.controlWrapper}>
-            <select
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">Choose a brand</option>
-              <option value="Buick">Buick</option>
-              <option value="Volvo">Volvo</option>
-              <option value="Subaru">Subaru</option>
-              <option value="Hyundai">Hyundai</option>
-              <option value="BMW">BMW</option>
-              <option value="Mini">Mini</option>
-            </select>
-          </div>
-        </div>
+    <section className={css.panel}>
+      {/* BRAND */}
+      <div className={css.block}>
+        <label className={css.label}>Car brand</label>
 
-        {/* Price */}
-        <div className={styles.field}>
-          <span className={styles.label}>Price / 1 hour</span>
-          <div className={styles.controlWrapper}>
-            <select
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className={styles.select}
-            >
-              <option value="">Choose a price</option>
-              <option value="30">30</option>
-              <option value="40">40</option>
-              <option value="50">50</option>
-              <option value="60">60</option>
-              <option value="70">70</option>
-              <option value="80">80</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Mileage */}
-        <div className={styles.field}>
-          <span className={styles.label}>Car mileage / km</span>
-          <div className={styles.mileageGroup}>
-            <input
-              type="number"
-              placeholder="From"
-              value={mileageFrom}
-              onChange={(e) => setMileageFrom(e.target.value)}
-              className={styles.input}
-            />
-            <input
-              type="number"
-              placeholder="To"
-              value={mileageTo}
-              onChange={(e) => setMileageTo(e.target.value)}
-              className={styles.input}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className={styles.actions}>
-        <button
-          type="button"
-          className={styles.search}
-          onClick={handleApplyFilters}
+        <div
+          className={css.selector}
+          onClick={() => {
+            setBrandOpen(!brandOpen);
+            setPriceOpen(false);
+          }}
         >
-          Search
-        </button>
+          <span>{brandValue ?? "Choose a brand"}</span>
+          <img
+            src="/strela.svg"
+            alt=""
+            className={`${css.arrow} ${brandOpen ? css.arrowOpen : ""}`}
+          />
+        </div>
 
-        {/* <button type="button" className={styles.reset} onClick={handleReset}>
-          Reset
-        </button> */}
+        {brandOpen && (
+          <div className={css.drop}>
+            <button
+              className={`${css.opt} ${brandValue === null ? css.active : ""}`}
+              onClick={() => setBrandValue(null)}
+            >
+              All brands
+            </button>
+
+            {BRANDS.map((b) => (
+              <button
+                key={b}
+                className={`${css.opt} ${brandValue === b ? css.active : ""}`}
+                onClick={() => setBrandValue(b)}
+              >
+                {b}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
+
+      {/* PRICE */}
+      <div className={css.block}>
+        <label className={css.label}>Price / 1 hour</label>
+
+        <div
+          className={css.selector}
+          onClick={() => {
+            setPriceOpen(!priceOpen);
+            setBrandOpen(false);
+          }}
+        >
+          <span>{priceValue ? `Up to $${priceValue}` : "Choose a price"}</span>
+          <img
+            src="/strela.svg"
+            alt=""
+            className={`${css.arrow} ${priceOpen ? css.arrowOpen : ""}`}
+          />
+        </div>
+
+        {priceOpen && (
+          <div className={css.drop}>
+            <button
+              className={`${css.opt} ${priceValue === null ? css.active : ""}`}
+              onClick={() => setPriceValue(null)}
+            >
+              Any price
+            </button>
+
+            {PRICES.map((p) => (
+              <button
+                key={p}
+                className={`${css.opt} ${priceValue === p ? css.active : ""}`}
+                onClick={() => setPriceValue(p)}
+              >
+                Up to ${p}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* MILEAGE */}
+      <div className={css.mileageBox}>
+        <div className={css.mileageItem}>
+          <span className={css.mlabel}>From</span>
+          <input
+            type="number"
+            value={fromVal ?? ""}
+            onChange={(e) => setFromVal(e.target.value || null)}
+            className={css.mInput}
+          />
+        </div>
+
+        <div className={css.vLine}></div>
+
+        <div className={css.mileageItem}>
+          <span className={css.mlabel}>To</span>
+          <input
+            type="number"
+            value={toVal ?? ""}
+            onChange={(e) => setToVal(e.target.value || null)}
+            className={css.mInput}
+          />
+        </div>
+      </div>
+
+      <button className={css.searchBtn} onClick={applyFilters}>
+        Search
+      </button>
     </section>
   );
 };
+
+export default Filters;

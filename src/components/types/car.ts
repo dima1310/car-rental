@@ -1,3 +1,10 @@
+export interface CarsFilters {
+  brand?: string | null;
+  price?: number | null;
+  mileageFrom?: number | null;
+  mileageTo?: number | null;
+}
+
 export interface Car {
   id: string;
   make: string;
@@ -12,4 +19,6 @@ export interface Car {
   rentalConditions: string[];
   fuelConsumption: string;
   engineSize: string;
+  address: string;
+  type: string;       
 }

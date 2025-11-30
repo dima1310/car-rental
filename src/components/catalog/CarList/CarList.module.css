@@ -3,6 +3,8 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   margin-top: 40px;
+
+  align-items: start; /* ВОТ ЭТО РЕШАЕТ ПРОБЛЕМУ */
 }
 
 .item {

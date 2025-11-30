@@ -1,0 +1,109 @@
+/* ===== ROOT CARD ===== */
+.card {
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  color: #121417;
+}
+
+/* ===== TITLE ===== */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ===== INFO ROW ===== */
+.infoRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #8a8a89;
+}
+
+/* ===== PRICE ===== */
+.priceTag {
+  font-size: 22px;
+  font-weight: 600;
+  color: #3470ff;
+}
+
+/* ===== DESCRIPTION ===== */
+.textBody {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #121417;
+}
+
+/* ===== SECTIONS ===== */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.blockTitle {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ===== LIST RESET ===== */
+.listReset {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+/* ===== LIST ITEM (ICON + TEXT) ===== */
+.listItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-size: 12px;
+  color: #121417;
+  white-space: nowrap;
+  position: relative;
+  padding-left: 20px;
+}
+
+/* ===== ICON BASE ===== */
+.listItem::before {
+  content: "";
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* ===== ICONS BY SECTION ===== */
+
+/* Rental Conditions */
+.block:nth-of-type(1) .listItem::before {
+  background-image: url("/icons/check.svg");
+}
+
+/* Specifications */
+.block:nth-of-type(2) .listItem::before {
+  background-image: url("/icons/gear.svg");
+}
+
+/* Accessories */
+.block:nth-of-type(3) .listItem::before {
+  background-image: url("/icons/check-circle.svg");
+}
+
+/* Functionalities */
+.block:nth-of-type(4) .listItem::before {
+  background-image: url("/icons/check-circle.svg");
+}

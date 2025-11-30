@@ -1,8 +1,8 @@
-.page {
+.screen {
   padding: 40px 0 80px;
 }
 
-.container {
+.frame {
   max-width: 1184px;
   margin: 0 auto;
   display: grid;
@@ -10,53 +10,53 @@
   gap: 72px;
 }
 
-/* LEFT */
+/* LEFT COLUMN */
 
-.left {
+.columnLeft {
   display: flex;
   flex-direction: column;
   gap: 40px;
 }
 
-.image {
+.photoLarge {
   width: 100%;
   height: auto;
   border-radius: 14px;
   object-fit: cover;
 }
 
-.booking {
+.boxBooking {
   background: #f7f7fb;
   border-radius: 10px;
   padding: 32px;
 }
 
-.bookingTitle {
+.boxTitle {
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 4px;
 }
 
-.bookingText {
+.boxSubtitle {
   font-size: 14px;
   color: #8a8a89;
   margin-bottom: 24px;
 }
 
-/* RIGHT */
+/* RIGHT COLUMN */
 
-.right {
+.columnRight {
   display: flex;
   flex-direction: column;
 }
 
-.title {
+.headingMain {
   font-size: 28px;
   font-weight: 600;
   margin-bottom: 8px;
 }
 
-.meta {
+.infoRow {
   display: flex;
   gap: 16px;
   font-size: 14px;
@@ -64,36 +64,36 @@
   margin-bottom: 16px;
 }
 
-.price {
+.priceTag {
   font-size: 24px;
   font-weight: 600;
   color: #3470ff;
   margin-bottom: 16px;
 }
 
-.description {
+.textBody {
   font-size: 14px;
   line-height: 1.5;
   margin-bottom: 24px;
 }
 
-.section {
+.block {
   margin-bottom: 24px;
 }
 
-.section h3 {
+.blockTitle {
   font-size: 16px;
   font-weight: 500;
   margin-bottom: 12px;
 }
 
-.section ul {
+.listReset {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.section li {
+.listItem {
   font-size: 14px;
   margin-bottom: 6px;
 }

@@ -1,160 +1,161 @@
-.section {
-  width: 100%;
-  margin: 40px 0 32px;
+/* ВЕСЬ ФИЛЬТР ПО ЦЕНТРУ */
+.panel {
+  width: 924px;
+  margin: 84px auto 56px auto;
+
   display: flex;
+  justify-content: center;   /* ЦЕНТРИРУЕМ */
   align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-/* блок с тремя полями */
-.fields {
-  display: flex;
-  align-items: flex-end;
-  gap: 18px;
-  flex: 1;
-}
-
-/* одно поле */
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* подпись сверху (Car brand, Price / 1 hour...) */
-.label {
-  font-size: 12px;
-  line-height: 1.3;
-  color: #8a8a89;
-}
-
-/* общая «капсула» для select / input */
-.controlWrapper {
-  position: relative;
-  width: 224px;
-  height: 48px;
-}
-
-/* базовый стиль select под макет */
-.select {
-  width: 100%;
-  height: 100%;
-  padding: 12px 40px 12px 18px;
-  border-radius: 14px;
-  border: none;
-  background-color: #f7f7fb;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #121417;
-
-  /* убираем системный вид */
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-
-  outline: none;
-  box-shadow: 0 0 0 1px transparent;
-}
-
-/* стрелка справа (упрощённая, но в стиле макета) */
-.select::-ms-expand {
-  display: none;
-}
-
-.controlWrapper::after {
-  content: "";
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  width: 10px;
-  height: 6px;
-  transform: translateY(-50%);
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23121417' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: center;
-  pointer-events: none;
-}
-
-/* mileage: два инпута в одну линию */
-.mileageGroup {
-  display: flex;
-  gap: 8px;
-}
-
-.input {
-  width: 160px;
-  height: 48px;
-  padding: 12px 16px;
-  border-radius: 14px;
-  border: none;
-  background-color: #f7f7fb;
-  font-size: 14px;
-  line-height: 1.4;
-  color: #121417;
-  outline: none;
-}
-
-.input::placeholder {
-  color: #8a8a89;
-}
-
-/* блок с кнопками справа */
-.actions {
-  display: flex;
-  align-items: center;
   gap: 16px;
 }
 
-/* синяя кнопка Search */
-.search {
-  min-width: 136px;
-  height: 48px;
-  padding: 0 32px;
-
-  border-radius: 12px;
-  border: none;
-
-  background-color: #3470ff;
-  color: #ffffff;
-  font-size: 14px;
-  font-weight: 600;
-
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+/* ОБЩИЙ КОРОБ ДЛЯ ПОЛЯ */
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
 }
 
-.search:hover {
-  background-color: #255eea;
-}
-
-/* текстовая кнопка Reset справа от Search */
-.reset {
-  border: none;
-  background: none;
-  padding: 0;
-
-  font-size: 14px;
+.label {
+  font-size: 12px;
+  line-height: 16px;
   color: #8a8a89;
+}
+
+/* SELECT */
+.selector {
+  width: 204px;
+  height: 44px;
+  background: #f3f4f8;
+  border-radius: 12px;
+
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   cursor: pointer;
 }
 
-.reset:hover {
+.arrow {
+  width: 13px;
+  height: 7px;
+  pointer-events: none;
+  transition: transform 0.2s ease;
+}
+
+.arrowOpen {
+  transform: rotate(180deg);
+}
+
+/* DROPDOWN */
+.drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  width: 204px;
+  max-height: 188px;
+  overflow-y: auto;
+
+  background: #fff;
+  border: 1px solid #d6dbe5;
+  border-radius: 12px;
+  box-shadow: 0 4px 36px rgba(0, 0, 0, 0.06);
+
+  padding: 8px 0;
+  z-index: 999;
+}
+
+/* OPTIONS */
+.opt {
+  width: 100%;
+  padding: 8px 16px;
+  font-size: 16px;
+  text-align: left;
+  color: #8a8a89;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.opt:hover {
+  background: #f0f3f9;
   color: #121417;
 }
 
-/* простая адаптация, чтобы не ломалось при меньшей ширине */
-@media (max-width: 1200px) {
-  .section {
-    flex-direction: column;
-    align-items: stretch;
-  }
+.active {
+  background: #e0eaff;
+  color: #3470ff;
+}
 
-  .fields {
-    flex-wrap: wrap;
-  }
+/* MILEAGE */
+.mileageBox {
+  width: 320px;
+  height: 44px;
+  background: #f3f4f8;
 
-  .actions {
-    justify-content: flex-start;
-  }
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.mileageItem {
+  width: 50%;
+  padding-left: 16px;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mlabel {
+  font-size: 16px;
+  color: #121417;
+}
+
+.mInput {
+  width: 100%;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.vLine {
+  width: 1px;
+  height: 44px;
+  background: #d6dbe5;
+}
+
+/* BUTTON */
+.searchBtn {
+  width: 120px;
+  height: 44px;
+
+  border: none;
+  border-radius: 12px;
+  background: #3470ff;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  background: #0b44cd;
+}
+
+/* Убираем стрелки у input[type="number"] — Chrome, Edge, Safari */
+.mInput::-webkit-inner-spin-button,
+.mInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Убираем стрелки у Firefox */
+.mInput[type="number"] {
+  -moz-appearance: textfield;
 }

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { carsApi, type CarsFilters } from "@/src/components/services/carsApi";
-import type { Car } from "@/src/components/types/car";
+import { carsApi } from "@/src/components/services/carsApi";
+import type { CarsFilters, Car } from "@/src/components/types/car";
 
 interface CarsState {
   cars: Car[];
@@ -22,7 +22,6 @@ interface CarsState {
 export const useCarsStore = create<CarsState>()(
   persist(
     (set, get) => ({
-      // ===== STATE =====
       cars: [],
       filters: {},
       favorites: [],
@@ -32,9 +31,7 @@ export const useCarsStore = create<CarsState>()(
       isLoading: false,
       error: null,
 
-      // ===== ACTIONS =====
-
-      // ✅ Установка фильтров (сброс каталога)
+      // === APPLY FILTERS ===
       setFilters: async (filters) => {
         set({
           filters,
@@ -46,59 +43,64 @@ export const useCarsStore = create<CarsState>()(
         await get().loadInitialCars();
       },
 
-      // ✅ Первая загрузка
+      // === LOAD INITIAL ===
       loadInitialCars: async () => {
         try {
           set({ isLoading: true, error: null });
 
           const { filters, limit } = get();
-          const data = await carsApi.getCars(filters);
+          const received = await carsApi.getCars(filters);
+
+          const safe = Array.isArray(received) ? received : [];
 
           set({
-            cars: data,
+            cars: safe,
             page: 1,
-            // ✅ если сервер дал limit элементов — показываем кнопку
-            hasMore: data.length === limit,
+            hasMore: safe.length === limit,
           });
-        } catch (error: any) {
-          set({
-            error: error?.message ?? "Failed to load cars",
-          });
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Failed to load cars";
+
+          set({ error: message });
         } finally {
           set({ isLoading: false });
         }
       },
 
-      // ✅ Load more
+      // === LOAD MORE ===
       loadMoreCars: async () => {
         const { filters, limit, cars, hasMore, isLoading } = get();
+
         if (!hasMore || isLoading) return;
 
         try {
           set({ isLoading: true, error: null });
 
-          const data = await carsApi.getCars(filters);
+          const received = await carsApi.getCars(filters);
+          const safe = Array.isArray(received) ? received : [];
 
           set({
-            cars: [...cars, ...data],
-            hasMore: data.length === limit,
+            cars: [...cars, ...safe],
+            hasMore: safe.length === limit,
           });
-        } catch (error: any) {
-          set({
-            error: error?.message ?? "Failed to load more cars",
-          });
+        } catch (err) {
+          const message =
+            err instanceof Error ? err.message : "Failed to load more cars";
+
+          set({ error: message });
         } finally {
           set({ isLoading: false });
         }
       },
 
-      // ✅ Избранное
+      // === FAVORITES ===
       toggleFavorite: (id) => {
         const { favorites } = get();
 
         set({
           favorites: favorites.includes(id)
-            ? favorites.filter((favId) => favId !== id)
+            ? favorites.filter((item) => item !== id)
             : [...favorites, id],
         });
       },
@@ -106,7 +108,7 @@ export const useCarsStore = create<CarsState>()(
     {
       name: "car-rental-store",
       partialize: (state) => ({
-        favorites: state.favorites, // ✅ сохраняем только избранное
+        favorites: state.favorites,
       }),
     }
   )

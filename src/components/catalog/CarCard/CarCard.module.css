@@ -1,95 +1,133 @@
-.card {
-  background: #fff;
+.cardRoot {
+  width: 274px;
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 8px 14px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
 }
 
-/* IMAGE */
-.imageWrapper {
+/* IMAGE AREA */
+.topImageBox {
   position: relative;
   width: 100%;
   height: 268px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
 }
 
-.image {
-  width: 100%;
-  height: 100%;
+.carPhoto {
   object-fit: cover;
 }
 
-/* FAVORITE HEART */
-.favorite {
+.favToggle {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
+  top: 14px;
+  right: 14px;
   border: none;
-  background: rgba(255, 255, 255, 0.9) url("/icons/heart.svg") center no-repeat;
+  background: none;
+  padding: 0;
   cursor: pointer;
+  width: 20px;
+  height: 20px;
 }
 
-.favoriteActive {
-  background: #3470ff url("/icons/heart-filled.svg") center no-repeat;
+.favOn img {
+  filter: drop-shadow(0 0 1px #3470ff);
 }
 
-/* CONTENT */
-.content {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* TITLE + PRICE */
+/* HEADER ROW */
 .titleRow {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-}
-
-.title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #121417;
-}
-
-.title span {
-  color: #3470ff;
-}
-
-.price {
-  font-size: 16px;
-  font-weight: 500;
-  color: #121417;
-}
-
-/* META */
-.meta {
-  font-size: 12px;
-  color: #8a8a89;
-  line-height: 1.4;
-}
-
-/* BUTTON */
-.button {
-  margin-top: 12px;
-  height: 44px;
-  background: #3470ff;
-  color: #fff;
-  border-radius: 12px;
-  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  font-weight: 600;
+  gap: 8px;
+}
+
+/* TITLE LINK (вместо глобального a) */
+.titleLink {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* TITLE */
+.mainTitle {
+  font-family: var(--font-manrope);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.25;
+  color: #121417;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
+
   text-decoration: none;
 }
 
-.button:hover {
-  background: #0b44cd;
+.modelAccent {
+  color: #3470ff;
+}
+
+.yearText {
+  font-size: 14px;
+  color: #8a8a89;
+  font-weight: 400;
+}
+
+.priceText {
+  font-family: var(--font-manrope);
+  font-weight: 600;
+  font-size: 16px;
+  color: #3470ff;
+}
+
+.metaLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  font-size: 12px;
+  color: #8a8a89;
+  line-height: 1.33;
+  margin-top: 4px;
+}
+
+.metaLine span {
+  position: relative;
+}
+
+.metaLine span + span::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1px;
+  height: 16px;
+  background-color: rgba(138, 138, 137, 0.2);
+}
+
+/* BUTTON */
+.detailsBtn {
+  margin-top: 20px;
+  width: 100%;
+  padding: 12px 0;
+  border-radius: 12px;
+  border: none;
+  text-align: center;
+  background-color: #3470ff;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+
+  text-decoration: none;
+}
+
+.detailsBtn:hover {
+  background-color: #0b44cd;
 }

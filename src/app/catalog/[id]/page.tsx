@@ -1,85 +1,141 @@
-import styles from "./page.module.css";
+import s from "./page.module.css";
 import { carsApi } from "@/src/components/services/carsApi";
 import { BookingForm } from "@/src/components/car/BookingForm/BookingForm";
 
-interface CarDetailsPageProps {
-  params: Promise<{ id: string }>;
-}
+type PageProps = {
+  params: { id: string };
+};
 
-export default async function CarDetailsPage({ params }: CarDetailsPageProps) {
+export default async function CarDetailsPage({ params }: PageProps) {
   const { id } = await params;
+
   const car = await carsApi.getCarById(id);
 
   if (!car) {
     return (
-      <main className={styles.page}>
+      <main className={s.screen}>
         <h1>Car not found</h1>
       </main>
     );
   }
 
+  /* ---------------- ADDRESS ---------------- */
+  const address = (car as any).address ?? "";
+  const [city = "", rawCountry = ""] = address.split(",");
+  const country = rawCountry.trim();
+
+  /* ---------------- RENTAL CONDITIONS ---------------- */
+  const rc = (car as any).rentalConditions as unknown;
+
+  const rentalConditions: string[] = Array.isArray(rc)
+    ? rc
+    : typeof rc === "string"
+    ? rc
+        .split("\n")
+        .map((item) => item.trim())
+        .filter(Boolean)
+    : [];
+
+  /* ---------------- ACCESSORIES ---------------- */
+  const accessories: string[] = Array.isArray((car as any).accessories)
+    ? (car as any).accessories
+    : [];
+
+  /* ---------------- FUNCTIONALITIES ---------------- */
+  const functionalities: string[] = Array.isArray((car as any).functionalities)
+    ? (car as any).functionalities
+    : [];
+
   return (
-    <main className={styles.page}>
-      <div className={styles.container}>
+    <main className={s.screen}>
+      <div className={s.frame}>
         {/* LEFT */}
-        <div className={styles.left}>
+        <div className={s.columnLeft}>
           <img
             src={car.img}
             alt={`${car.make} ${car.model}`}
-            className={styles.image}
+            className={s.photoLarge}
           />
 
-          <div className={styles.booking}>
-            {/* <h3 className={styles.bookingTitle}>Book your car now</h3>
-            <p className={styles.bookingText}>
-              Stay connected! We are always ready to help you.
-            </p> */}
-
+          <div className={s.boxBooking}>
             <BookingForm carId={car.id} />
           </div>
         </div>
 
         {/* RIGHT */}
-        <div className={styles.right}>
-          <h1 className={styles.title}>
+        <div className={s.columnRight}>
+          <h1 className={s.headingMain}>
             {car.make} {car.model}, {car.year}
           </h1>
 
-          <div className={styles.meta}>
-            <span>ID: {car.id}</span>
-            <span>{car.address}</span>
-            <span>Mileage: {car.mileage.toLocaleString("en-US")} km</span>
+          <div className={s.infoList}>
+            <div className={s.iconRow}>
+              <img src="/icons/calendar.svg" alt="id" />
+              <span>{car.id}</span>
+            </div>
+
+            <div className={s.iconRow}>
+              <img src="/icons/location.svg" alt="location" />
+              <span>
+                {city}
+                {country ? `, ${country}` : ""}
+              </span>
+            </div>
+
+            <div className={s.iconRow}>
+              <img src="/icons/fuel-pump.svg" alt="mileage" />
+              <span>{car.mileage.toLocaleString("en-US")} km</span>
+            </div>
           </div>
 
-          <p className={styles.price}>{car.rentalPrice}</p>
-          <p className={styles.description}>{car.description}</p>
+          <p className={s.priceTag}>{car.rentalPrice}</p>
+          <p className={s.textBody}>{car.description}</p>
 
-          <section className={styles.section}>
-            <h3>Rental Conditions:</h3>
-            <ul>
-              <li>Minimum age: 25</li>
-              <li>Security deposit required</li>
-              <li>Valid driver’s license</li>
+          {/* RENTAL CONDITIONS */}
+          <section className={s.block}>
+            <h3 className={s.blockTitle}>Rental Conditions</h3>
+            <ul className={s.listReset}>
+              {rentalConditions.map((item, i) => (
+                <li key={i} className={s.listItem}>
+                  {item}
+                </li>
+              ))}
             </ul>
           </section>
 
-          <section className={styles.section}>
-            <h3>Car Specifications:</h3>
-            <ul>
-              <li>Year: {car.year}</li>
-              <li>Fuel consumption: {car.fuelConsumption}</li>
-              <li>Engine size: {car.engineSize}</li>
+          {/* SPECIFICATIONS */}
+          <section className={s.block}>
+            <h3 className={s.blockTitle}>Specifications</h3>
+            <ul className={s.listReset}>
+              <li className={s.listItem}>Year: {car.year}</li>
+              <li className={s.listItem}>
+                Fuel consumption: {car.fuelConsumption}
+              </li>
+              <li className={s.listItem}>Engine size: {car.engineSize}</li>
             </ul>
           </section>
 
-          <section className={styles.section}>
-            <h3>Accessories and functionalities:</h3>
-            <ul>
-              <li>Leather seats</li>
-              <li>Panoramic sunroof</li>
-              <li>Remote start</li>
-              <li>Blind-spot monitoring</li>
-              <li>Premium audio system</li>
+          {/* ACCESSORIES */}
+          <section className={s.block}>
+            <h3 className={s.blockTitle}>Accessories</h3>
+            <ul className={s.listReset}>
+              {accessories.map((item, i) => (
+                <li key={i} className={s.listItem}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* FUNCTIONALITIES */}
+          <section className={s.block}>
+            <h3 className={s.blockTitle}>Functionalities</h3>
+            <ul className={s.listReset}>
+              {functionalities.map((item, i) => (
+                <li key={i} className={s.listItem}>
+                  {item}
+                </li>
+              ))}
             </ul>
           </section>
         </div>

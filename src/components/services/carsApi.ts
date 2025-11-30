@@ -1,50 +1,47 @@
+import axios from "axios";
 import { apiClient } from "./apiClient";
-import type { Car } from "@/src/components/types/car";
-
-export interface CarsFilters {
-  make?: string | null;
-  rentalPrice?: string | null;
-  mileage?: number | null;
-  year?: number | null;
-}
+import type { CarsFilters, Car } from "../types/car";
 
 export const carsApi = {
-  // ============================
-  // GET LIST OF CARS + FILTERS
-  // ============================
-  async getCars(filters: CarsFilters = {}): Promise<Car[]> {
-    const res = await apiClient.get("/cars", {
-      params: {
-        make: filters.make ?? undefined,
-        rentalPrice: filters.rentalPrice ?? undefined,
-        mileage: filters.mileage ?? undefined,
-        year: filters.year ?? undefined,
-      },
-    });
+  async getCars(filters: CarsFilters): Promise<Car[]> {
+    const params: Record<string, unknown> = {};
 
-    // API возвращает объект: { cars: [...], total: number }
-    if (Array.isArray(res.data)) return res.data; // fallback
-    if (Array.isArray(res.data.cars)) return res.data.cars; // <-- правильный путь
+    if (filters.brand) params.brand = filters.brand;
+    if (filters.price) params.rentalPrice = filters.price;
+
+    if (filters.mileageFrom != null) {
+      params.mileageFrom = filters.mileageFrom;
+    }
+
+    if (filters.mileageTo != null) {
+      params.mileageTo = filters.mileageTo;
+    }
+
+    const { data } = await apiClient.get("/cars", { params });
+
+    // 👉 бекенд чаще всего возвращает просто массив машин
+    if (Array.isArray(data)) {
+      return data as Car[];
+    }
+
+    // на случай, если обернут в объект { cars: [...] }
+    if (data && Array.isArray((data as any).cars)) {
+      return (data as any).cars as Car[];
+    }
 
     return [];
   },
 
-  // ============================
-  // GET ONE CAR BY ID
-  // (API не имеет endpoint /car/{id}, поэтому ищем вручную)
-  // ============================
   async getCarById(id: string): Promise<Car | null> {
     try {
-      const res = await apiClient.get("/cars");
-
-      const list: Car[] = Array.isArray(res.data.cars) ? res.data.cars : [];
-
-      const found = list.find((item) => item.id === id);
-
-      return found ?? null;
-    } catch (err) {
-      console.error("getCarById error:", err);
-      return null;
+      const { data } = await apiClient.get(`/cars/${id}`);
+      return data as Car;
+    } catch (error) {
+      // важное: 404 не ломает билд, а отдаём null
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        return null;
+      }
+      throw error;
     }
   },
 };

@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { useCarsStore } from "@/src/components/store/useCarStore";
 import { CarCard } from "@/src/components/catalog/CarCard/CarCards";
 import styles from "./CarList.module.css";
-import { useEffect } from "react";
 
 export default function CarList() {
   const { cars, isLoading, error, hasMore, loadInitialCars, loadMoreCars } =
