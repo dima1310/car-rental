@@ -10,8 +10,28 @@ interface Props {
 }
 
 export const CarDetails = ({ car }: Props) => {
-  const [city = "", rawCountry = ""] = car.address.split(",");
+  /* ===== ADDRESS ===== */
+  const [city = "", rawCountry = ""] = (car.address ?? "").split(",");
   const country = rawCountry.trim();
+
+  /* ===== NORMALIZE DATA ===== */
+
+  const rentalConditions: string[] = Array.isArray(car.rentalConditions)
+    ? car.rentalConditions
+    : typeof car.rentalConditions === "string"
+    ? car.rentalConditions
+        .split("\n")
+        .map((i) => i.trim())
+        .filter(Boolean)
+    : [];
+
+  const accessories: string[] = Array.isArray(car.accessories)
+    ? car.accessories
+    : [];
+
+  const functionalities: string[] = Array.isArray(car.functionalities)
+    ? car.functionalities
+    : [];
 
   return (
     <section className={styles.card}>
@@ -40,8 +60,8 @@ export const CarDetails = ({ car }: Props) => {
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Rental Conditions</h3>
         <ul className={styles.list}>
-          {car.rentalConditions.map((item) => (
-            <li key={item} className={styles.item}>
+          {rentalConditions.map((item, idx) => (
+            <li key={`${item}-${idx}`} className={styles.item}>
               <Image src="/icons/check.svg" alt="" width={16} height={16} />
               {item}
             </li>
@@ -76,8 +96,8 @@ export const CarDetails = ({ car }: Props) => {
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Accessories</h3>
         <ul className={styles.list}>
-          {car.accessories.map((acc) => (
-            <li key={acc} className={styles.item}>
+          {accessories.map((acc, idx) => (
+            <li key={`${acc}-${idx}`} className={styles.item}>
               <Image
                 src="/icons/check-circle.svg"
                 alt=""
@@ -94,8 +114,8 @@ export const CarDetails = ({ car }: Props) => {
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Functionalities</h3>
         <ul className={styles.list}>
-          {car.functionalities.map((fn) => (
-            <li key={fn} className={styles.item}>
+          {functionalities.map((fn, idx) => (
+            <li key={`${fn}-${idx}`} className={styles.item}>
               <Image
                 src="/icons/check-circle.svg"
                 alt=""
