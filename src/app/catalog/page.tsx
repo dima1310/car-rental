@@ -26,11 +26,11 @@ export default function CatalogPage() {
         {/* Листинг работает от store */}
         <CarList />
 
-        {hasMore && !isLoading && (
+        {/* {hasMore && !isLoading && (
           <button className={s.loadMore} onClick={loadMoreCars}>
             Load more
           </button>
-        )}
+        )} */}
 
         {isLoading && <p className={s.loader}>Loading...</p>}
       </div>

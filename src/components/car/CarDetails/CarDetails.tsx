@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import styles from "./CarDetails.module.css";
 import type { Car } from "@/src/components/types/car";
 import { formatMileage } from "@/src/components/utils/formatMileage";
@@ -9,30 +10,8 @@ interface Props {
 }
 
 export const CarDetails = ({ car }: Props) => {
-  /* ===== ADDRESS ===== */
-  const address = car.address ?? "";
-  const [city = "", rawCountry = ""] = address.split(",");
+  const [city = "", rawCountry = ""] = car.address.split(",");
   const country = rawCountry.trim();
-
-  /* ===== RENTAL CONDITIONS (string | string[]) ===== */
-  const rentalConditions: string[] = Array.isArray(car.rentalConditions)
-    ? car.rentalConditions
-    : typeof car.rentalConditions === "string"
-    ? car.rentalConditions
-        .split("\n")
-        .map((item) => item.trim())
-        .filter(Boolean)
-    : [];
-
-  /* ===== ACCESSORIES ===== */
-  const accessories: string[] = Array.isArray(car.accessories)
-    ? car.accessories
-    : [];
-
-  /* ===== FUNCTIONALITIES ===== */
-  const functionalities: string[] = Array.isArray(car.functionalities)
-    ? car.functionalities
-    : [];
 
   return (
     <section className={styles.card}>
@@ -52,17 +31,18 @@ export const CarDetails = ({ car }: Props) => {
       </div>
 
       {/* PRICE */}
-      <p className={styles.priceTag}>${car.rentalPrice}</p>
+      <p className={styles.price}>${car.rentalPrice}</p>
 
       {/* DESCRIPTION */}
-      <p className={styles.textBody}>{car.description}</p>
+      <p className={styles.description}>{car.description}</p>
 
       {/* RENTAL CONDITIONS */}
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Rental Conditions</h3>
-        <ul className={styles.listReset}>
-          {rentalConditions.map((item, idx) => (
-            <li key={idx} className={styles.listItem}>
+        <ul className={styles.list}>
+          {car.rentalConditions.map((item) => (
+            <li key={item} className={styles.item}>
+              <Image src="/icons/check.svg" alt="" width={16} height={16} />
               {item}
             </li>
           ))}
@@ -71,22 +51,39 @@ export const CarDetails = ({ car }: Props) => {
 
       {/* SPECIFICATIONS */}
       <section className={styles.block}>
-        <h3 className={styles.blockTitle}>Specifications</h3>
-        <ul className={styles.listReset}>
-          <li className={styles.listItem}>Year: {car.year}</li>
-          <li className={styles.listItem}>
-            Fuel consumption: {car.fuelConsumption}
+        <h3 className={styles.blockTitle}>Car Specifications</h3>
+        <ul className={styles.list}>
+          <li className={styles.item}>
+            <Image src="/icons/calendar.svg" alt="" width={16} height={16} />
+            Year: {car.year}
           </li>
-          <li className={styles.listItem}>Engine size: {car.engineSize}</li>
+          <li className={styles.item}>
+            <Image src="/icons/car.svg" alt="" width={16} height={16} />
+            Type: {car.type}
+          </li>
+          <li className={styles.item}>
+            <Image src="/icons/fuel.svg" alt="" width={16} height={16} />
+            Fuel Consumption: {car.fuelConsumption}
+          </li>
+          <li className={styles.item}>
+            <Image src="/icons/engine.svg" alt="" width={16} height={16} />
+            Engine Size: {car.engineSize}
+          </li>
         </ul>
       </section>
 
       {/* ACCESSORIES */}
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Accessories</h3>
-        <ul className={styles.listReset}>
-          {accessories.map((acc, idx) => (
-            <li key={idx} className={styles.listItem}>
+        <ul className={styles.list}>
+          {car.accessories.map((acc) => (
+            <li key={acc} className={styles.item}>
+              <Image
+                src="/icons/check-circle.svg"
+                alt=""
+                width={16}
+                height={16}
+              />
               {acc}
             </li>
           ))}
@@ -96,9 +93,15 @@ export const CarDetails = ({ car }: Props) => {
       {/* FUNCTIONALITIES */}
       <section className={styles.block}>
         <h3 className={styles.blockTitle}>Functionalities</h3>
-        <ul className={styles.listReset}>
-          {functionalities.map((fn, idx) => (
-            <li key={idx} className={styles.listItem}>
+        <ul className={styles.list}>
+          {car.functionalities.map((fn) => (
+            <li key={fn} className={styles.item}>
+              <Image
+                src="/icons/check-circle.svg"
+                alt=""
+                width={16}
+                height={16}
+              />
               {fn}
             </li>
           ))}

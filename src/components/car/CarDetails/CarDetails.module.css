@@ -1,20 +1,19 @@
-/* ===== ROOT CARD ===== */
 .card {
   max-width: 520px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
   color: #121417;
 }
 
-/* ===== TITLE ===== */
+/* TITLE */
 .title {
   font-size: 20px;
   font-weight: 600;
   line-height: 1.4;
 }
 
-/* ===== INFO ROW ===== */
+/* INFO */
 .infoRow {
   display: flex;
   flex-wrap: wrap;
@@ -23,21 +22,20 @@
   color: #8a8a89;
 }
 
-/* ===== PRICE ===== */
-.priceTag {
+/* PRICE */
+.price {
   font-size: 22px;
   font-weight: 600;
   color: #3470ff;
 }
 
-/* ===== DESCRIPTION ===== */
-.textBody {
+/* DESCRIPTION */
+.description {
   font-size: 14px;
   line-height: 1.5;
-  color: #121417;
 }
 
-/* ===== SECTIONS ===== */
+/* SECTIONS */
 .block {
   display: flex;
   flex-direction: column;
@@ -49,61 +47,27 @@
   font-weight: 600;
 }
 
-/* ===== LIST RESET ===== */
-.listReset {
+/* LIST */
+.list {
   list-style: none;
   padding: 0;
   margin: 0;
 
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 24px;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* ===== LIST ITEM (ICON + TEXT) ===== */
-.listItem {
-  display: inline-flex;
+/* ITEM WITH ICON */
+.item {
+  display: flex;
   align-items: center;
   gap: 8px;
 
-  font-size: 12px;
+  font-size: 14px;
   color: #121417;
-  white-space: nowrap;
-  position: relative;
-  padding-left: 20px;
 }
 
-/* ===== ICON BASE ===== */
-.listItem::before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-
-/* ===== ICONS BY SECTION ===== */
-
-/* Rental Conditions */
-.block:nth-of-type(1) .listItem::before {
-  background-image: url("/icons/check.svg");
-}
-
-/* Specifications */
-.block:nth-of-type(2) .listItem::before {
-  background-image: url("/icons/gear.svg");
-}
-
-/* Accessories */
-.block:nth-of-type(3) .listItem::before {
-  background-image: url("/icons/check-circle.svg");
-}
-
-/* Functionalities */
-.block:nth-of-type(4) .listItem::before {
-  background-image: url("/icons/check-circle.svg");
+.item img {
+  flex-shrink: 0;
 }
