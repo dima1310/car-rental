@@ -7,18 +7,42 @@ export interface CarsFilters {
 
 export interface Car {
   id: string;
+
   make: string;
   model: string;
   year: number;
+
   rentalPrice: string;
   mileage: number;
+
   img: string;
   description: string;
+
+  /** ✅ может прийти как массив */
   accessories: string[];
+
+  /** ✅ может прийти как массив */
   functionalities: string[];
-  rentalConditions: string[];
+
+  /**
+   * ✅ ВАЖНО
+   * backend иногда шлёт:
+   * - string
+   * - string[]
+   */
+  rentalConditions: string | string[];
+
   fuelConsumption: string;
   engineSize: string;
+
+  /**
+   * ✅ иногда пустая строка
+   * формат: "Kyiv, Ukraine"
+   */
   address: string;
-  type: string;       
+
+  /**
+   * ✅ используется в Card
+   */
+  type: string;
 }
